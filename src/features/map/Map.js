@@ -1,5 +1,4 @@
-import React, { createRef, setState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { createRef } from 'react';
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
