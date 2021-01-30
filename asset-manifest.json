@@ -1,18 +1,23 @@
 {
   "files": {
-    "main.css": "/trip-tracker/static/css/main.7f7ba5b0.chunk.css",
+    "main.css": "/trip-tracker/static/css/main.c0a0bf71.chunk.css",
     "main.js": "/trip-tracker/static/js/main.3954e2e3.chunk.js",
+    "main.js.map": "/trip-tracker/static/js/main.3954e2e3.chunk.js.map",
     "runtime-main.js": "/trip-tracker/static/js/runtime-main.7f5c142d.js",
-    "static/css/2.93c77fff.chunk.css": "/trip-tracker/static/css/2.93c77fff.chunk.css",
+    "runtime-main.js.map": "/trip-tracker/static/js/runtime-main.7f5c142d.js.map",
+    "static/css/2.21709cdc.chunk.css": "/trip-tracker/static/css/2.21709cdc.chunk.css",
     "static/js/2.d7caefad.chunk.js": "/trip-tracker/static/js/2.d7caefad.chunk.js",
+    "static/js/2.d7caefad.chunk.js.map": "/trip-tracker/static/js/2.d7caefad.chunk.js.map",
     "index.html": "/trip-tracker/index.html",
+    "static/css/2.21709cdc.chunk.css.map": "/trip-tracker/static/css/2.21709cdc.chunk.css.map",
+    "static/css/main.c0a0bf71.chunk.css.map": "/trip-tracker/static/css/main.c0a0bf71.chunk.css.map",
     "static/js/2.d7caefad.chunk.js.LICENSE.txt": "/trip-tracker/static/js/2.d7caefad.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7f5c142d.js",
-    "static/css/2.93c77fff.chunk.css",
+    "static/css/2.21709cdc.chunk.css",
     "static/js/2.d7caefad.chunk.js",
-    "static/css/main.7f7ba5b0.chunk.css",
+    "static/css/main.c0a0bf71.chunk.css",
     "static/js/main.3954e2e3.chunk.js"
   ]
 }
