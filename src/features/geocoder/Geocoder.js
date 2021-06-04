@@ -12,7 +12,7 @@ class Geocoder extends React.Component {
 
   componentDidMount () {
     const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
+      accessToken: process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN,
       mapboxgl: mapboxgl
     })
 

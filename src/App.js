@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Map } from './features/map/Map';
+import Map from './features/map/Map';
 import { Geocoder } from './features/geocoder/Geocoder'
 import './App.css';
 

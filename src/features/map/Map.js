@@ -1,7 +1,15 @@
 import React, { createRef } from 'react';
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { connect } from 'react-redux';
 
+import {
+  setCenter,
+  setZoom,
+  setPitch,
+  setBearing,
+  setCenterFlag
+} from './mapSlice';
 import styles from './Map.module.css';
 
 class Map extends React.Component {
@@ -17,20 +25,37 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
+    const { onClick, center, zoom, pitch, bearing, setCenter, setZoom } = this.props
+
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN
 
     const map = new mapboxgl.Map({
       container: this.mapContainer.current,
       style: 'mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y',
-      zoom: 13.1,
-      center: [-114.34411, 32.6141],
-      pitch: 85,
-      bearing: 80,
+      zoom,
+      center,
+      pitch,
+      bearing,
     })
 
     this.setState({ map })
 
-    map.on('click', this.props.onClick)
+    map.on('click', onClick)
+
+    map.on('dragend', (event) => {
+      const center = event.target.getCenter()
+      setCenter([center.lng, center.lat])
+    })
+
+    map.on('moveend', (event) => {
+      const center = event.target.getCenter()
+      setCenter([center.lng, center.lat])
+    })
+
+    map.on('zoomend', (event) => {
+      const zoom = event.target.getZoom()
+      setZoom(zoom)
+    })
   
     map.on('load', () => {
       map.addSource('mapbox-dem', {
@@ -105,7 +130,12 @@ class Map extends React.Component {
 
   render () {
     const { map, ready } = this.state
-    const { children } = this.props
+    const { children, centerFlag, center } = this.props
+
+    if (centerFlag) {
+      map.setCenter(center)
+      setCenterFlag(false)
+    }
 
     const renderChildren = React.Children.map(children, child => {
       if (React.isValidElement(child)) {
@@ -128,4 +158,22 @@ class Map extends React.Component {
   }
 }
 
-export { Map }
+const mapStateToProps = (state) => {
+  return {
+    center: state.map.center,
+    zoom: state.map.zoom,
+    pitch: state.map.pitch,
+    bearing: state.map.bearing,
+    centerFlag: state.map.centerFlag,
+  }
+}
+
+const mapDispatchToProps = {
+  setCenter,
+  setZoom,
+  setPitch,
+  setBearing,
+  setCenterFlag
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map)

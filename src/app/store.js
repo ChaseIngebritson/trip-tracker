@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import mapReducer from '../features/map/mapSlice';
 
 export default configureStore({
+  devTools: true,
   reducer: {
-    counter: counterReducer,
+    map: mapReducer,
   },
 });
