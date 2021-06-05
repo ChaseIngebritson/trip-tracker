@@ -11,6 +11,7 @@ import {
   setCenterFlag
 } from './mapSlice';
 import styles from './Map.module.css';
+import handleEvents from './handleEvents'
 
 class Map extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { onClick, center, zoom, pitch, bearing, setCenter, setZoom } = this.props
+    const { center, zoom, pitch, bearing } = this.props
 
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN
 
@@ -40,22 +41,7 @@ class Map extends React.Component {
 
     this.setState({ map })
 
-    map.on('click', onClick)
-
-    map.on('dragend', (event) => {
-      const center = event.target.getCenter()
-      setCenter([center.lng, center.lat])
-    })
-
-    map.on('moveend', (event) => {
-      const center = event.target.getCenter()
-      setCenter([center.lng, center.lat])
-    })
-
-    map.on('zoomend', (event) => {
-      const zoom = event.target.getZoom()
-      setZoom(zoom)
-    })
+    handleEvents(map, this.props)
   
     map.on('load', () => {
       map.addSource('mapbox-dem', {

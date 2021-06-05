@@ -16,6 +16,10 @@ class Geocoder extends React.Component {
       mapboxgl: mapboxgl
     })
 
+    geocoder.on('result', (event) => {
+      console.log(event)
+    })
+
     this.props.map.addControl(geocoder)
   }
 
