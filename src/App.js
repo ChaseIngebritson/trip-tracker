@@ -1,20 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Grommet } from 'grommet';
 
-import Map from './features/map/Map';
-import { Geocoder } from './features/geocoder/Geocoder'
 import './App.css';
+import theme from './theme'
+import Home from './views/home/Home'
+import Viewer from './views/viewer/Viewer'
 
 function App() {
-  function onMapClick (e) {
-    console.log(e)
-  }
-
   return (
-    <div className="App">
-      <Map onClick={onMapClick}>
-        <Geocoder />
-      </Map>
-    </div>
+    <Grommet theme={theme} full>
+      <Router basename={`/${process.env.PUBLIC_URL}`}>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/viewer" exact component={Viewer} />
+        </Switch>
+      </Router>
+    </Grommet>
   );
 }
 
