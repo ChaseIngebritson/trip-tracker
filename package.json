@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "",
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "^4.7.0",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

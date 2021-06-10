@@ -1,15 +1,24 @@
 import React from 'react';
 import { Box, FormField, Form, Button } from 'grommet'
-import GeocoderStandalone from '../../features/geocoder-standalone/GeocoderStandalone'
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
+import {
+  setCenter
+} from '../../features/map/mapSlice';
+import Geocoder from '../../features/geocoder/Geocoder'
 import './Home.css';
+import lazyPreload from '../../utils/lazyPreload'
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
 
     this.onSubmit = this.onSubmit.bind(this)
+    this.onGeocoderSelect = this.onGeocoderSelect.bind(this)
+
+    const Viewer = lazyPreload(() => import("../viewer/Viewer"));
+    Viewer.preload()
 
     this.state = {
       search: '',
@@ -17,18 +26,16 @@ class Home extends React.Component {
     }
   }
 
-  onSubmit (event) {
+  onSubmit () {
     const { history } = this.props
-
     history.push('/viewer')
   }
 
-  onChange (event) {
-    console.log(event)
-  }
+  onGeocoderSelect (event) {
+    const { setCenter } = this.props
+    const { value: location } = event
 
-  onSuggestionSelect (event) {
-    console.log(event)
+    setCenter(location.center)
   }
 
   render () {
@@ -37,7 +44,7 @@ class Home extends React.Component {
         <Box width="medium">
           <Form onSubmit={this.onSubmit}>
             <FormField name="search" htmlFor="search-input-id" label="Search for your location">
-              <GeocoderStandalone onChange={this.onChange} onSuggestionSelect={this.onSuggestionSelect} />
+              <Geocoder onChange={this.onGeocoderChange} onSuggestionSelect={this.onGeocoderSelect} />
             </FormField>
             <Box direction="row" gap="medium">
               <Button type="submit" primary label="Submit" />
@@ -49,4 +56,17 @@ class Home extends React.Component {
   }
 }
 
-export default withRouter(Home);
+const mapStateToProps = (state) => {
+  return {
+    
+  }
+}
+
+const mapDispatchToProps = {
+  setCenter
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(Home)
+);
+

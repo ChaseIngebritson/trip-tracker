@@ -4,10 +4,11 @@ export const mapSlice = createSlice({
   name: 'map',
   initialState: {
     center: [-114.34411, 32.6141],
-    zoom: 13.1,
-    pitch: 85,
-    bearing: 80,
-    centerFlag: false
+    zoom: 13,
+    pitch: 76,
+    bearing: 150,
+    centerFlag: false,
+    idle: false
   },
   reducers: {
     setCenter: (state, action) => {
@@ -24,16 +25,20 @@ export const mapSlice = createSlice({
     },
     setCenterFlag: (state, action) => {
       state.centerFlag = action.payload
-    }
+    },
+    setIdle: (state, action) => {
+      state.idle = action.payload
+    },
   },
 });
 
-export const { setCenter, setZoom, setPitch, setBearing, setCenterFlag } = mapSlice.actions;
+export const { setCenter, setZoom, setPitch, setBearing, setCenterFlag, setIdle } = mapSlice.actions;
 
 export const getCenter = state => state.map.center;
 export const getZoom = state => state.map.zoom;
 export const getPitch = state => state.map.pitch;
 export const getBearing = state => state.map.bearing;
 export const getCenterFlag = state => state.map.centerFlag;
+export const getIdle = state => state.map.centerFlag;
 
 export default mapSlice.reducer;

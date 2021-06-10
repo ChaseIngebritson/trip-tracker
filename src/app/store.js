@@ -1,5 +1,4 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import mapReducer from '../features/map/mapSlice'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
 import { 
@@ -12,8 +11,12 @@ import {
   REGISTER
 } from 'redux-persist'
 
+import mapReducer from '../features/map/mapSlice'
+import geocoderReducer from '../features/geocoder/geocoderSlice'
+
 const reducers = combineReducers({
   map: mapReducer,
+  geocoder: geocoderReducer
 })
 
 const persistConfig = {

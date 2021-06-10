@@ -1,7 +1,19 @@
 export default function handleEvents (map, props) {
-  const { onClick, setCenter, setZoom, setBearing, setPitch } = props
+  const { onIdle, onClick, setIdle, onDrag, setCenter, setZoom, setBearing, setPitch } = props
 
-  map.on('click', onClick)
+  map.on('idle', (event) => {
+    if (onIdle) onIdle(event)
+    
+    setIdle(true)
+  })
+
+  map.on('click', (event) => {
+    if (onClick) onClick(event)
+  })
+
+  map.on('drag', (event) => {
+    if (onDrag) onDrag(event)
+  })
 
   map.on('dragend', (event) => {
     const center = event.target.getCenter()

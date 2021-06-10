@@ -8,7 +8,8 @@ import {
   setZoom,
   setPitch,
   setBearing,
-  setCenterFlag
+  setCenterFlag,
+  setIdle
 } from './mapSlice';
 import styles from './Map.module.css';
 import handleEvents from './handleEvents'
@@ -26,7 +27,10 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { center, zoom, pitch, bearing } = this.props
+    const { center, zoom, pitch, bearing, onReady, setIdle } = this.props
+
+    // Open up the loader
+    setIdle(false)
 
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOXGL_ACCESS_TOKEN
 
@@ -44,6 +48,7 @@ class Map extends React.Component {
     handleEvents(map, this.props)
   
     map.on('load', () => {
+      // Begin adding 3D terrain
       map.addSource('mapbox-dem', {
         'type': 'raster-dem',
         'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
@@ -111,6 +116,7 @@ class Map extends React.Component {
       }, labelLayerId);
 
       this.setState({ ready: true })
+      if (onReady) onReady(map)
     })
   }
 
@@ -159,7 +165,8 @@ const mapDispatchToProps = {
   setZoom,
   setPitch,
   setBearing,
-  setCenterFlag
+  setCenterFlag,
+  setIdle
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map)
