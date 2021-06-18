@@ -1,5 +1,6 @@
 import React from 'react';
-import { Main, Grid, Sidebar, Layer, Spinner, Box } from 'grommet'
+import { Main, Grid, Sidebar, Layer, Spinner, Box, Nav, Button } from 'grommet'
+import { Search } from 'grommet-icons'
 import { connect } from 'react-redux';
 
 import Map from '../../features/map/Map';
@@ -73,7 +74,7 @@ class Viewer extends React.Component {
         <Grid
           fill
           rows={['auto']}
-          columns={['xsmall', 'auto']}
+          columns={['xsmall', 'full']}
           areas={[
             { name: 'sidebar', start: [0, 0], end: [0, 0] },
             { name: 'main', start: [1, 0], end: [1, 0] },
@@ -81,8 +82,11 @@ class Viewer extends React.Component {
         >
           <Sidebar 
             gridArea="sidebar"
-            background="brand"
-          />
+            background="brand">
+            <Nav>
+              <Button icon={<Search />} hoverIndicator alignSelf="center"/>
+            </Nav>
+          </Sidebar>
 
           <Map 
             gridArea="main"
