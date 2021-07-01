@@ -39,6 +39,6 @@ export const getZoom = state => state.map.zoom;
 export const getPitch = state => state.map.pitch;
 export const getBearing = state => state.map.bearing;
 export const getCenterFlag = state => state.map.centerFlag;
-export const getIdle = state => state.map.centerFlag;
+export const getIdle = state => state.map.getIdle;
 
 export default mapSlice.reducer;

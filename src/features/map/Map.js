@@ -124,7 +124,7 @@ class Map extends React.Component {
     const { map, ready } = this.state
     const { children, centerFlag, center } = this.props
 
-    if (centerFlag) {
+    if (centerFlag && map) {
       map.setCenter(center)
       setCenterFlag(false)
     }
@@ -138,9 +138,9 @@ class Map extends React.Component {
     })
 
     return(
-      <div>
-        <div 
-          className={styles.mapContainer} 
+      <div className={styles.mapContainer}>
+        <div
+          className={styles.map}
           ref={this.mapContainer} 
         />
 

@@ -20,19 +20,19 @@ export default function handleEvents (map, props) {
     setCenter([center.lng, center.lat])
   })
 
-  map.on('moveend', (event) => {
+  // Removed due to issues between this and the geocoder updating the state infinitely 
+  // map.on('moveend', (event) => {
+  //   const center = event.target.getCenter()
+  //   setCenter([center.lng, center.lat])
+  // })
+
+  map.on('zoomend', (event) => {
+    const zoom = event.target.getZoom()
+    setZoom(zoom)
+
+    // When the map is zoomed the center will also change and need to be updated
     const center = event.target.getCenter()
     setCenter([center.lng, center.lat])
-  })
-
-  map.on('zoomend', (event) => {
-    const zoom = event.target.getZoom()
-    setZoom(zoom)
-  })
-
-  map.on('zoomend', (event) => {
-    const zoom = event.target.getZoom()
-    setZoom(zoom)
   })
 
   map.on('pitchend', (event) => {

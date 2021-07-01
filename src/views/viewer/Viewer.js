@@ -1,13 +1,13 @@
 import React from 'react';
-import { Main, Grid, Sidebar, Layer, Spinner, Box, Nav, Button } from 'grommet'
+import { Main, Sidebar, Nav, DropButton, Box, Card, CardHeader } from 'grommet'
 import { Search } from 'grommet-icons'
 import { connect } from 'react-redux';
 
 import Map from '../../features/map/Map';
 import './Viewer.css';
-import { 
-  setIdle 
-} from '../../features/map/mapSlice';
+import { setIdle, setCenter, setCenterFlag } from '../../features/map/mapSlice';
+import Overlay from '../../features/overlay/Overlay'
+import Geocoder from '../../features/geocoder/Geocoder'
 
 class Viewer extends React.Component {
   ANIMATION_DURATION = 20000
@@ -18,6 +18,7 @@ class Viewer extends React.Component {
     this.onMapReady = this.onMapReady.bind(this)
     this.onMapIdle = this.onMapIdle.bind(this)
     this.onMapDrag = this.onMapDrag.bind(this)
+    this.onGeocoderSelect = this.onGeocoderSelect.bind(this)
     this.animate = this.animate.bind(this)
     this.frame = this.frame.bind(this)
 
@@ -37,6 +38,14 @@ class Viewer extends React.Component {
 
   onMapDrag () {
 
+  }
+
+  onGeocoderSelect (event) {
+    const { setCenter, setCenterFlag } = this.props
+    const { value: location } = event
+
+    // setCenterFlag(true)
+    setCenter(location.center)
   }
 
   animate () {
@@ -63,38 +72,44 @@ class Viewer extends React.Component {
 
     return (
       <Main>
-        {!idle && (
-          <Layer>
-            <Box fill align="center" justify="center" pad="medium">
-              <Spinner size="large" />
-            </Box>
-          </Layer>
-        )}
-
-        <Grid
-          fill
-          rows={['auto']}
-          columns={['xsmall', 'full']}
-          areas={[
-            { name: 'sidebar', start: [0, 0], end: [0, 0] },
-            { name: 'main', start: [1, 0], end: [1, 0] },
-          ]}
-        >
-          <Sidebar 
-            gridArea="sidebar"
-            background="brand">
-            <Nav>
-              <Button icon={<Search />} hoverIndicator alignSelf="center"/>
-            </Nav>
-          </Sidebar>
-
-          <Map 
-            gridArea="main"
+        <Box fill>
+          <Map
             onReady={this.onMapReady}
             onIdle={this.onMapIdle}
             onDrag={this.onMapDrag}
           />
-        </Grid>
+        </Box>
+        <Overlay top left>
+          <Sidebar 
+            round
+            background="brand"
+            animation={[
+              { type: 'fadeIn', duration: 300 },
+              { type: 'slideRight', size: 'xlarge', duration: 150 },
+            ]}
+          >
+            <Nav>
+              <DropButton 
+                icon={<Search />} 
+                hoverIndicator 
+                alignSelf="center"
+                dropAlign={{ left: "right" }}
+                dropContent={
+                  <Box width="small" fill="vertical" background="white" pad="small">
+                    <Geocoder 
+                      onSuggestionSelect={this.onGeocoderSelect}
+                    />
+                  </Box>
+                }
+              />
+            </Nav>
+          </Sidebar>
+        </Overlay>
+        <Overlay bottom left>
+          <Card height="small" width="medium" background="brand">
+            <CardHeader pad="medium">Stops</CardHeader>
+          </Card>
+        </Overlay>
       </Main>
     );
   }
@@ -107,7 +122,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  setIdle
+  setIdle,
+  setCenter,
+  setCenterFlag
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Viewer);
