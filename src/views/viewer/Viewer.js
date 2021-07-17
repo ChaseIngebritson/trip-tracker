@@ -3,7 +3,7 @@ import { Main, Sidebar, Nav, DropButton, Box, Card, CardHeader } from 'grommet'
 import { Search } from 'grommet-icons'
 import { connect } from 'react-redux';
 
-import Map from '../../features/map/Map';
+import Map from '../../features/map-new/Map';
 import './Viewer.css';
 import { setIdle, setCenter, setCenterFlag } from '../../features/map/mapSlice';
 import Overlay from '../../features/overlay/Overlay'

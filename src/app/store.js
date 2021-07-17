@@ -11,7 +11,7 @@ import {
   REGISTER
 } from 'redux-persist'
 
-import mapReducer from '../features/map/mapSlice'
+import mapReducer from '../features/map-new/mapSlice'
 import geocoderReducer from '../features/geocoder/geocoderSlice'
 
 const reducers = combineReducers({
